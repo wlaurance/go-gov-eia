@@ -2,7 +2,7 @@ package eia
 
 type EIACategory struct {
 	CategoryId int    `json:"category_id"`
-	Name       string `json:"category_id"`
+	Name       string `json:"name"`
 }
 
 type EIATLDCategory struct {
