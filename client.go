@@ -21,9 +21,13 @@ func (e *EIAClient) makeRequest(setName string, qs url.Values) (resp *http.Respo
 	return
 }
 
-func (e *EIAClient) Categories() (cats []EIACategory, err error) {
+func (e *EIAClient) Categories() ([]EIACategory, error) {
+	return e.CategoriesById("371")
+}
+
+func (e *EIAClient) CategoriesById(id string) (cats []EIACategory, err error) {
 	values := url.Values{}
-	values.Set("category_id", "371")
+	values.Set("category_id", id)
 	resp, err := e.makeRequest("category", values)
 	if err != nil {
 		return

@@ -30,3 +30,16 @@ func TestCategories(t *testing.T) {
 		}
 	}
 }
+
+func TestCategoriesById(t *testing.T) {
+	client := getClient()
+	weeklyRetailGasPricesByAreaCats, err := client.CategoriesById("240691")
+	if err != nil {
+		t.Errorf("Categories error %s", err.Error())
+	} else {
+		el := 1
+		if len(weeklyRetailGasPricesByAreaCats) < el {
+			t.Errorf("weeklyRetailGasPricesByAreaCats had length %d, not %d", len(weeklyRetailGasPricesByAreaCats), el)
+		}
+	}
+}
