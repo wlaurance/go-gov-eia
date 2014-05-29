@@ -25,6 +25,9 @@ func (e *EIAClient) Categories() (cats []EIACategory, err error) {
 	values := url.Values{}
 	values.Set("category_id", "371")
 	resp, err := e.makeRequest("category", values)
+	if err != nil {
+		return
+	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
