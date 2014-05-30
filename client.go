@@ -21,11 +21,11 @@ func (e *EIAClient) makeRequest(setName string, qs url.Values) (resp *http.Respo
 	return
 }
 
-func (e *EIAClient) Categories() ([]EIACategory, error) {
+func (e *EIAClient) Categories() (EIATLDCategory, error) {
 	return e.CategoriesById("371")
 }
 
-func (e *EIAClient) CategoriesById(id string) (cats []EIACategory, err error) {
+func (e *EIAClient) CategoriesById(id string) (cats EIATLDCategory, err error) {
 	values := url.Values{}
 	values.Set("category_id", id)
 	resp, err := e.makeRequest("category", values)
@@ -39,6 +39,6 @@ func (e *EIAClient) CategoriesById(id string) (cats []EIACategory, err error) {
 	}
 	var r EIACategoryResponse
 	json.Unmarshal(body, &r)
-	cats = r.Category.ChildCategories
+	cats = r.Category
 	return
 }
