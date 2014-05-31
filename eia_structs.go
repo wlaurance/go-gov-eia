@@ -52,5 +52,5 @@ type EIASeriesRequest struct {
 
 type EIASeriesResponse struct {
 	EIASeriesRequest
-	Series EIASeries `json:"series"`
+	Series []EIASeries `json:"series"`
 }

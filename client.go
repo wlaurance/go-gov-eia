@@ -43,6 +43,20 @@ func (e *EIAClient) CategoriesById(id string) (cats EIATLDCategory, err error) {
 	return
 }
 
-func (e *EIAClient) SeriesById(id string) (series EIASeries, err error) {
+func (e *EIAClient) SeriesById(id string) (series []EIASeries, err error) {
+	values := url.Values{}
+	values.Set("series_id", id)
+	resp, err := e.makeRequest("series", values)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+	var s EIASeriesResponse
+	json.Unmarshal(body, &s)
+	series = s.Series
 	return
 }
