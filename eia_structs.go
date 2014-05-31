@@ -31,12 +31,26 @@ type EIATLDCategory struct {
 	EIACategory
 }
 
+type EIATLDRequest struct {
+	Request EIARequest `json:"request"`
+}
+
 type EIACategoryRequest struct {
-	EIARequest `json:"request"`
+	EIARequest
 	EIACategoryId
 }
 
 type EIACategoryResponse struct {
 	Category EIATLDCategory `json:"category"`
 	Request  EIACategoryRequest
+}
+
+type EIASeriesRequest struct {
+	EIARequest
+	EIASeriesId
+}
+
+type EIASeriesResponse struct {
+	EIASeriesRequest
+	Series EIASeries `json:"series"`
 }

@@ -42,3 +42,7 @@ func (e *EIAClient) CategoriesById(id string) (cats EIATLDCategory, err error) {
 	cats = r.Category
 	return
 }
+
+func (e *EIAClient) SeriesById(id string) (series EIASeries, err error) {
+	return
+}

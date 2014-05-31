@@ -60,7 +60,16 @@ func TestPetroleumPaddsWeeklyRegular(t *testing.T) {
 				t.Errorf("Some error %s", err.Error())
 			}
 			for _, ser := range f.ChildSeries {
-				fmt.Println(ser.SeriesId)
+				if strings.Contains(ser.Name, "Regular") && strings.Contains(ser.Name, "Weekly") {
+					if strings.Contains(ser.Name, "All") {
+						series, err := client.SeriesById(ser.SeriesId)
+						if err != nil {
+							t.Errorf("Series error %s", err.Error())
+							t.FailNow()
+						}
+						fmt.Println(series)
+					}
+				}
 			}
 		}
 	}
