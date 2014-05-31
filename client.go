@@ -21,9 +21,13 @@ func (e *EIAClient) makeRequest(setName string, qs url.Values) (resp *http.Respo
 	return
 }
 
-func (e *EIAClient) Categories() (cats []EIACategory, err error) {
+func (e *EIAClient) Categories() (EIATLDCategory, error) {
+	return e.CategoriesById("371")
+}
+
+func (e *EIAClient) CategoriesById(id string) (cats EIATLDCategory, err error) {
 	values := url.Values{}
-	values.Set("category_id", "371")
+	values.Set("category_id", id)
 	resp, err := e.makeRequest("category", values)
 	if err != nil {
 		return
@@ -35,6 +39,24 @@ func (e *EIAClient) Categories() (cats []EIACategory, err error) {
 	}
 	var r EIACategoryResponse
 	json.Unmarshal(body, &r)
-	cats = r.Category.ChildCategories
+	cats = r.Category
+	return
+}
+
+func (e *EIAClient) SeriesById(id string) (series []EIASeriesExtended, err error) {
+	values := url.Values{}
+	values.Set("series_id", id)
+	resp, err := e.makeRequest("series", values)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+	var s EIASeriesResponse
+	json.Unmarshal(body, &s)
+	series = s.Series
 	return
 }
