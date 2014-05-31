@@ -52,5 +52,13 @@ type EIASeriesRequest struct {
 
 type EIASeriesResponse struct {
 	EIASeriesRequest
-	Series []EIASeries `json:"series"`
+	Series []EIASeriesExtended `json:"series"`
+}
+
+type EIASeriesExtended struct {
+	EIASeries
+	Data        [][]interface{} `json:"data"`
+	Description string          `json:"description"`
+	UnitsShort  string          `json:"unitsshort"`
+	Geography   string          `json:"geography"`
 }
