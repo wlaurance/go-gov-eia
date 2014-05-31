@@ -67,10 +67,16 @@ func TestPetroleumPaddsWeeklyRegular(t *testing.T) {
 							t.Errorf("Series error %s", err.Error())
 							t.FailNow()
 						}
-						fmt.Println(series)
+						for _, s := range series {
+							testSeries(t, s)
+						}
 					}
 				}
 			}
 		}
 	}
+}
+
+func testSeries(t *testing.T, series EIASeriesExtended) {
+	fmt.Printf("Testing %s\n", series.Name)
 }
