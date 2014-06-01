@@ -79,4 +79,9 @@ func TestPetroleumPaddsWeeklyRegular(t *testing.T) {
 
 func testSeries(t *testing.T, series EIASeriesExtended) {
 	fmt.Printf("Testing %s\n", series.Name)
+	sum := 0.0
+	for _, record := range series.Data {
+		sum = sum + record[1].(float64)
+	}
+	fmt.Printf("\tAll time Average %f\n", sum/float64(len(series.Data)))
 }
