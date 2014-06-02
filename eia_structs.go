@@ -1,5 +1,9 @@
 package eia
 
+import (
+	"encoding/json"
+)
+
 type EIAName struct {
 	Name string `json:"name"`
 }
@@ -57,8 +61,28 @@ type EIASeriesResponse struct {
 
 type EIASeriesExtended struct {
 	EIASeries
-	Data        [][]interface{} `json:"data"`
-	Description string          `json:"description"`
-	UnitsShort  string          `json:"unitsshort"`
-	Geography   string          `json:"geography"`
+	Data        []EIAPoint `json:"data"`
+	Description string     `json:"description"`
+	UnitsShort  string     `json:"unitsshort"`
+	Geography   string     `json:"geography"`
+}
+
+type EIASeriesExtendedPre struct {
+	EIASeriesExtended
+	Data [][]interface{} `json:"data"`
+}
+
+type EIAPoint struct {
+	Date  string
+	Price float64
+}
+
+func (ep *EIAPoint) UnmarshalJSON(b []byte) (err error) {
+	var a []interface{}
+	err = json.Unmarshal(b, &a)
+	if err != nil {
+		return
+	}
+	*ep = EIAPoint{Date: a[0].(string), Price: a[1].(float64)}
+	return
 }
