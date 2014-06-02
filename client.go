@@ -10,14 +10,14 @@ import (
 const base = "http://api.eia.gov/"
 
 type EIAClient struct {
-	apiKey     string
-	httpClient *http.Client
+	ApiKey     string
+	HttpClient *http.Client
 }
 
 func (e *EIAClient) makeRequest(setName string, qs url.Values) (resp *http.Response, err error) {
-	qs.Set("api_key", e.apiKey)
+	qs.Set("api_key", e.ApiKey)
 	url := base + setName + "/?" + qs.Encode()
-	resp, err = http.Get(url)
+	resp, err = e.HttpClient.Get(url)
 	return
 }
 
