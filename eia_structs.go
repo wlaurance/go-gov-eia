@@ -61,7 +61,7 @@ type EIASeriesResponse struct {
 
 type EIASeriesExtended struct {
 	EIASeries
-	Data        []EIAPoint `json:"data"`
+	Data        []EIAPoint `json:"data" datastore:",noindex"`
 	Description string     `json:"description"`
 	UnitsShort  string     `json:"unitsshort"`
 	Geography   string     `json:"geography"`
