@@ -2,6 +2,8 @@ package eia
 
 import (
 	"encoding/json"
+	"strconv"
+	"time"
 )
 
 type EIAName struct {
@@ -73,7 +75,7 @@ type EIASeriesExtendedPre struct {
 }
 
 type EIAPoint struct {
-	Date  string
+	Date  time.Time
 	Price float64
 }
 
@@ -83,6 +85,11 @@ func (ep *EIAPoint) UnmarshalJSON(b []byte) (err error) {
 	if err != nil {
 		return
 	}
-	*ep = EIAPoint{Date: a[0].(string), Price: a[1].(float64)}
+	s := a[0].(string)
+	y, _ := strconv.Atoi(s[:4])
+	m, _ := strconv.Atoi(s[4:6])
+	d, _ := strconv.Atoi(s[6:])
+	t := time.Date(y, time.Month(m), d, 0, 0, 0, 0, time.UTC)
+	*ep = EIAPoint{Date: t, Price: a[1].(float64)}
 	return
 }
